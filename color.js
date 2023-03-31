@@ -9,10 +9,10 @@ function init() {
 `[
   {"name": "base03 ", "hexColor": "#002b36", "comment": "Dark background"},
   {"name": "base02 ", "hexColor": "#073642", "comment": "Dark bg highlights"},
-  {"name": "base01 ", "hexColor": "#586e75", "comment": "Dark emphasized / Light comments"},
+  {"name": "base01 ", "hexColor": "#586e75", "comment": "Dark comments / Light emphasized"},
   {"name": "base00 ", "hexColor": "#657b83", "comment": "Light body text"},
   {"name": "base0  ", "hexColor": "#839496", "comment": "Dark body text"},
-  {"name": "base1  ", "hexColor": "#93a1a1", "comment": "Dark comments / Light emphasized"},
+  {"name": "base1  ", "hexColor": "#93a1a1", "comment": "Dark emphasized / Light comments"},
   {"name": "base2  ", "hexColor": "#eee8d5", "comment": "Light bg highlights"},
   {"name": "base3  ", "hexColor": "#fdf6e3", "comment": "Light background"},
   {"name": "yellow ", "hexColor": "#b58900", "comment": "Accent Colors"},
