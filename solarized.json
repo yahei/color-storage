@@ -1,0 +1,18 @@
+[
+  {"name": "base03 ", "hexColor": "#002b36", "comment": "Dark background"},
+  {"name": "base02 ", "hexColor": "#073642", "comment": "Dark bg highlights"},
+  {"name": "base01 ", "hexColor": "#586e75", "comment": "Dark emphasized / Light comments"},
+  {"name": "base00 ", "hexColor": "#657b83", "comment": "Light body text"},
+  {"name": "base0  ", "hexColor": "#839496", "comment": "Dark body text"},
+  {"name": "base1  ", "hexColor": "#93a1a1", "comment": "Dark comments / Light emphasized"},
+  {"name": "base2  ", "hexColor": "#eee8d5", "comment": "Light bg highlights"},
+  {"name": "base3  ", "hexColor": "#fdf6e3", "comment": "Light background"},
+  {"name": "yellow ", "hexColor": "#b58900", "comment": "Accent Colors"},
+  {"name": "orange ", "hexColor": "#cb4b16", "comment": "Accent Colors"},
+  {"name": "red    ", "hexColor": "#dc322f", "comment": "Accent Colors"},
+  {"name": "magenta", "hexColor": "#d33682", "comment": "Accent Colors"},
+  {"name": "violet ", "hexColor": "#6c71c4", "comment": "Accent Colors"},
+  {"name": "blue   ", "hexColor": "#268bd2", "comment": "Accent Colors"},
+  {"name": "cyan   ", "hexColor": "#2aa198", "comment": "Accent Colors"},
+  {"name": "green  ", "hexColor": "#859900", "comment": "Accent Colors"}
+]

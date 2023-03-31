@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Color Storage</title>
+    <script type="text/javascript" src="color.js"></script>
+    <link href="color.css" rel="stylesheet">
+  </head>
+  <body onload="init();">
+
+    <h1>Color Storage</h1>
+
+    <h3>Color List</h3>
+    <div class="colors" id="contents-colors"></div>
+    <textarea class="edit" id="edit-json" style="display: none">sample text</textarea>
+
+    <div class="button2" id="edit"   onclick="edit();">edit</div>
+    <div class="button2" id="save"   onclick="save();"   style="display: none">save</div>
+    <div class="button2" id="cancel" onclick="cancel();" style="display: none">cancel</div>
+
+    <br>
+    <br>
+    <br>
+  </body>
+</html>
