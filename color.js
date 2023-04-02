@@ -31,17 +31,17 @@ function init() {
   }
   
   // リスト作成
-  setColumns('contents-colors', JSON.parse(colors));
+  setColumns('colorList', JSON.parse(colors));
 
   // 編集エリアにjsonを書き込む
-  document.getElementById('edit-json').value = colors;
+  document.getElementById('editArea').value = colors;
 
 }
 
 // リストを受け取って色をまとめてセットする
 function setColumns(elementId, colorList) {
   // リストのdiv要素をリセット
-  document.getElementById('contents-colors').innerHTML = '';
+  document.getElementById(elementId).innerHTML = '';
 
   // リストを作成
   colorList.forEach(element => {
@@ -132,12 +132,12 @@ function addColumn(elementId, name, hexColor, comment='') {
 // エディット画面を開く
 function edit() {
   // 要素を取得
-  const colorList = document.getElementById('contents-colors');
-  const editArea = document.getElementById('edit-json');
+  const viewMode = document.getElementById('viewMode');
+  const editMode = document.getElementById('editMode');
 
   // 色リストとテキストエリアの表示を切り替える
-  colorList.style.display = 'none';
-  editArea.style.display = 'block';
+  viewMode.style.display = 'none';
+  editMode.style.display = 'block';
 
   // ボタンの表示を切り替える
   document.getElementById('edit').style.display = 'none';
@@ -148,18 +148,20 @@ function edit() {
 // リストを更新し、ローカルストレージに保存する
 function save() {
   // 要素を取得
-  const colorList = document.getElementById('contents-colors');
-  const editArea = document.getElementById('edit-json');
+  const viewMode = document.getElementById('viewMode');
+  const colorList = document.getElementById('colorList');
+  const editMode = document.getElementById('editMode');
+  const editArea = document.getElementById('editArea');
 
   // テキストエリアの内容を取得
-  colors = editArea.value;
+  json = editArea.value;
 
   // リストを更新する
   try {
     // パースする
-    list = JSON.parse(colors);
+    list = JSON.parse(json);
     // リスト更新
-    setColumns('contents-colors', list);
+    setColumns('colorList', list);
   } catch (error) {
     // パースか何かが失敗した
     alert('error...\n\n' + error);
@@ -170,8 +172,8 @@ function save() {
   localStorage.setItem('colors', colors);
   
   // 色リストとテキストエリアの表示を切り替える
-  colorList.style.display = 'block';
-  editArea.style.display = 'none';
+  viewMode.style.display = 'block';
+  editMode.style.display = 'none';
 
   // ボタンの表示を切り替える
   document.getElementById('edit').style.display = 'inline-block';
@@ -182,12 +184,12 @@ function save() {
 // 何もせず編集画面を閉じる
 function cancel() {
   // 要素を取得
-  const colorList = document.getElementById('contents-colors');
-  const editArea = document.getElementById('edit-json');
+  const viewMode = document.getElementById('viewMode');
+  const editMode = document.getElementById('editMode');
 
   // 色リストとテキストエリアの表示を切り替える
-  colorList.style.display = 'block';
-  editArea.style.display = 'none';
+  viewMode.style.display = 'block';
+  editMode.style.display = 'none';
 
   // ボタンの表示を切り替える
   document.getElementById('edit').style.display = 'inline-block';
