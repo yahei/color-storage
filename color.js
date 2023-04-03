@@ -64,6 +64,11 @@ function addColumn(elementId, name, hexColor, comment='') {
    * background : 背景化可能かどうか
    */
 
+  // 先頭に#がなければ付ける
+  if (!hexColor.startsWith("#")) {
+    hexColor = "#" + hexColor;
+  }
+
   // 追加するdiv要素を作成
   var newColor = document.createElement('div');
 
@@ -102,7 +107,14 @@ function addColumn(elementId, name, hexColor, comment='') {
     element.innerText = "copy";
     element.addEventListener('click', () => {
       // クリップボードにコピー
-      navigator.clipboard.writeText(hexColor);
+      {
+        // #を付けるかどうか判定してクリップボードにコピー
+        if (document.getElementById('copyWithHash').checked) {
+          navigator.clipboard.writeText(hexColor);
+        } else {
+          navigator.clipboard.writeText(hexColor.slice(1));
+        }
+      }
       // 文字を変える
       element.innerText = "copied!";
       // 一定時間後に戻す
