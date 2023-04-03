@@ -61,7 +61,6 @@ function addColumn(elementId, name, hexColor, comment='') {
    * label      : 色の名前
    * hexColor   : 色の16進数コード
    * comment    : この色についての説明
-   * background : 背景化可能かどうか
    */
 
   // 先頭に#がなければ付ける
@@ -71,10 +70,12 @@ function addColumn(elementId, name, hexColor, comment='') {
 
   // 追加するdiv要素を作成
   var newColor = document.createElement('div');
+  newColor.style.setProperty('--bg-color', hexColor);
 
   // 色の名前
   {
     element = document.createElement('div');
+    element.style.color = hexColor;
     element.className = 'colorName';
     element.textContent = name;
     newColor.appendChild(element);
@@ -83,6 +84,7 @@ function addColumn(elementId, name, hexColor, comment='') {
   // 16進数コード
   {
     element = document.createElement('div');
+    element.style.color = hexColor;
     element.className = 'hexColor';
     element.textContent = hexColor;
     newColor.appendChild(element);
@@ -91,19 +93,19 @@ function addColumn(elementId, name, hexColor, comment='') {
   // コメント
   {
     element = document.createElement('div');
+    element.style.color = hexColor;
     element.className = 'colorComment';
     element.textContent = comment;
     newColor.appendChild(element);
   }
 
   // スタイルを設定
-  newColor.style.color = hexColor;
   newColor.className = 'colorListItem';
 
   // 色をコピーするボタンを追加
   {
     let element = document.createElement('div');
-    element.className = 'button';
+    element.className = 'copyButton';
     element.innerText = "copy";
     element.addEventListener('click', () => {
       // クリップボードにコピー
@@ -125,11 +127,24 @@ function addColumn(elementId, name, hexColor, comment='') {
     newColor.appendChild(element);
   }
 
+  // これを文字色にするボタンを追加
+  {
+    element = document.createElement('div');
+    element.style.color = hexColor;
+    element.className = 'fgButton';
+    element.innerText = "FG";
+    element.addEventListener('click', () => {
+      // 文字色を変える
+      document.getElementById(elementId).style.color = hexColor;
+    });
+    newColor.appendChild(element);
+  }
+
   // これを背景にするボタンを追加
   {
     element = document.createElement('div');
-    element.className = 'button';
-    element.innerText = "background";
+    element.className = 'bgButton';
+    element.innerText = "BG";
     element.addEventListener('click', () => {
       // 背景色を変える
       document.getElementById(elementId).style.background = hexColor;

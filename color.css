@@ -28,7 +28,7 @@ body {
   margin: 0px auto;
   padding: 0px 0.2em;
   display: grid;
-  grid-template-columns: 1fr 1fr 4fr 5em 6em;
+  grid-template-columns: 1fr 1fr 4fr auto auto auto;
 }
 
 /* 色の名前 */
@@ -52,13 +52,35 @@ body {
   text-align: left;
 }
 
-/* コピーするボタンと背景にするボタン */
-.button {
+/* コピーするボタン */
+.copyButton {
   width: fit-content;
-  margin: 0 auto;
-  padding: 0.1 0.2em;
+  margin: 0 0.2em;
+  padding: 0 1em;
+  width: 2em;
   text-decoration: underline;
   cursor: pointer;
+}
+
+/* 文字色にするボタン */
+.fgButton {
+  width: fit-content;
+  margin: 0 0.2em;
+  padding: 0 1em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* 背景色にするボタン */
+.bgButton {
+  width: fit-content;
+  margin: 0 0.2em;
+  padding: 0 1em;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.bgButton:hover {
+  background: var(--bg-color);
 }
 
 /* エディットボタン */
