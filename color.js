@@ -31,17 +31,17 @@ function init() {
   }
   
   // リスト作成
-  setColumns('contents-colors', JSON.parse(colors));
+  setColumns('colorList', JSON.parse(colors));
 
   // 編集エリアにjsonを書き込む
-  document.getElementById('edit-json').value = colors;
+  document.getElementById('editArea').value = colors;
 
 }
 
 // リストを受け取って色をまとめてセットする
 function setColumns(elementId, colorList) {
   // リストのdiv要素をリセット
-  document.getElementById('contents-colors').innerHTML = '';
+  document.getElementById(elementId).innerHTML = '';
 
   // リストを作成
   colorList.forEach(element => {
@@ -61,15 +61,21 @@ function addColumn(elementId, name, hexColor, comment='') {
    * label      : 色の名前
    * hexColor   : 色の16進数コード
    * comment    : この色についての説明
-   * background : 背景化可能かどうか
    */
+
+  // 先頭に#がなければ付ける
+  if (!hexColor.startsWith("#")) {
+    hexColor = "#" + hexColor;
+  }
 
   // 追加するdiv要素を作成
   var newColor = document.createElement('div');
+  newColor.style.setProperty('--bg-color', hexColor);
 
   // 色の名前
   {
     element = document.createElement('div');
+    element.style.color = hexColor;
     element.className = 'colorName';
     element.textContent = name;
     newColor.appendChild(element);
@@ -78,6 +84,7 @@ function addColumn(elementId, name, hexColor, comment='') {
   // 16進数コード
   {
     element = document.createElement('div');
+    element.style.color = hexColor;
     element.className = 'hexColor';
     element.textContent = hexColor;
     newColor.appendChild(element);
@@ -86,23 +93,30 @@ function addColumn(elementId, name, hexColor, comment='') {
   // コメント
   {
     element = document.createElement('div');
+    element.style.color = hexColor;
     element.className = 'colorComment';
     element.textContent = comment;
     newColor.appendChild(element);
   }
 
   // スタイルを設定
-  newColor.style.color = hexColor;
   newColor.className = 'colorListItem';
 
   // 色をコピーするボタンを追加
   {
     let element = document.createElement('div');
-    element.className = 'button';
+    element.className = 'copyButton';
     element.innerText = "copy";
     element.addEventListener('click', () => {
       // クリップボードにコピー
-      navigator.clipboard.writeText(hexColor);
+      {
+        // #を付けるかどうか判定してクリップボードにコピー
+        if (document.getElementById('copyWithHash').checked) {
+          navigator.clipboard.writeText(hexColor);
+        } else {
+          navigator.clipboard.writeText(hexColor.slice(1));
+        }
+      }
       // 文字を変える
       element.innerText = "copied!";
       // 一定時間後に戻す
@@ -113,11 +127,24 @@ function addColumn(elementId, name, hexColor, comment='') {
     newColor.appendChild(element);
   }
 
+  // これを文字色にするボタンを追加
+  {
+    element = document.createElement('div');
+    element.style.color = hexColor;
+    element.className = 'fgButton';
+    element.innerText = "FG";
+    element.addEventListener('click', () => {
+      // 文字色を変える
+      document.getElementById(elementId).style.color = hexColor;
+    });
+    newColor.appendChild(element);
+  }
+
   // これを背景にするボタンを追加
   {
     element = document.createElement('div');
-    element.className = 'button';
-    element.innerText = "background";
+    element.className = 'bgButton';
+    element.innerText = "BG";
     element.addEventListener('click', () => {
       // 背景色を変える
       document.getElementById(elementId).style.background = hexColor;
@@ -132,12 +159,12 @@ function addColumn(elementId, name, hexColor, comment='') {
 // エディット画面を開く
 function edit() {
   // 要素を取得
-  const colorList = document.getElementById('contents-colors');
-  const editArea = document.getElementById('edit-json');
+  const viewMode = document.getElementById('viewMode');
+  const editMode = document.getElementById('editMode');
 
   // 色リストとテキストエリアの表示を切り替える
-  colorList.style.display = 'none';
-  editArea.style.display = 'block';
+  viewMode.style.display = 'none';
+  editMode.style.display = 'block';
 
   // ボタンの表示を切り替える
   document.getElementById('edit').style.display = 'none';
@@ -148,18 +175,20 @@ function edit() {
 // リストを更新し、ローカルストレージに保存する
 function save() {
   // 要素を取得
-  const colorList = document.getElementById('contents-colors');
-  const editArea = document.getElementById('edit-json');
+  const viewMode = document.getElementById('viewMode');
+  const colorList = document.getElementById('colorList');
+  const editMode = document.getElementById('editMode');
+  const editArea = document.getElementById('editArea');
 
   // テキストエリアの内容を取得
-  colors = editArea.value;
+  json = editArea.value;
 
   // リストを更新する
   try {
     // パースする
-    list = JSON.parse(colors);
+    list = JSON.parse(json);
     // リスト更新
-    setColumns('contents-colors', list);
+    setColumns('colorList', list);
   } catch (error) {
     // パースか何かが失敗した
     alert('error...\n\n' + error);
@@ -167,11 +196,11 @@ function save() {
   }
 
   // セーブする
-  localStorage.setItem('colors', colors);
+  localStorage.setItem('colors', json);
   
   // 色リストとテキストエリアの表示を切り替える
-  colorList.style.display = 'block';
-  editArea.style.display = 'none';
+  viewMode.style.display = 'block';
+  editMode.style.display = 'none';
 
   // ボタンの表示を切り替える
   document.getElementById('edit').style.display = 'inline-block';
@@ -182,12 +211,12 @@ function save() {
 // 何もせず編集画面を閉じる
 function cancel() {
   // 要素を取得
-  const colorList = document.getElementById('contents-colors');
-  const editArea = document.getElementById('edit-json');
+  const viewMode = document.getElementById('viewMode');
+  const editMode = document.getElementById('editMode');
 
   // 色リストとテキストエリアの表示を切り替える
-  colorList.style.display = 'block';
-  editArea.style.display = 'none';
+  viewMode.style.display = 'block';
+  editMode.style.display = 'none';
 
   // ボタンの表示を切り替える
   document.getElementById('edit').style.display = 'inline-block';
