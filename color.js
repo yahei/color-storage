@@ -196,7 +196,7 @@ function save() {
   }
 
   // セーブする
-  localStorage.setItem('colors', colors);
+  localStorage.setItem('colors', json);
   
   // 色リストとテキストエリアの表示を切り替える
   viewMode.style.display = 'block';
